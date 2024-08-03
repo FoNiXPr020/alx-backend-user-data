@@ -1,0 +1,30 @@
+#!/bin/bash
+
+add_commit_push() {
+    task_number=$1
+    commit_message=$2
+
+    git add ${task_number}-*
+    git commit -m "${commit_message}"
+    git push
+}
+
+add_commit_push "0" "Adding Task 0 Unique Users"
+add_commit_push "1" "Adding Task 1 Country Users"
+add_commit_push "2" "Adding Task 2 Fans"
+add_commit_push "3" "Adding Task 3 Glam Rock Bands"
+add_commit_push "4" "Adding Task 4 Store"
+add_commit_push "5" "Adding Task 5 Valid Email"
+add_commit_push "6" "Adding Task 6 Bonus"
+add_commit_push "7" "Adding Task 7 Average Score"
+add_commit_push "8" "Adding Task 8 Index My Names"
+add_commit_push "9" "Adding Task 9 Index Name Score"
+add_commit_push "10" "Adding Task 10 Div"
+add_commit_push "11" "Adding Task 11 Need Meeting"
+add_commit_push "100" "Adding Task 100 Average Weighted Score"
+add_commit_push "101" "Adding Task 101 Compute Average Score For User"
+
+
+git add .
+git commit -m "Adding Resources and Requirements"
+git push
