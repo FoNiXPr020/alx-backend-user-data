@@ -50,7 +50,9 @@ def get_logger() -> logging.Logger:
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
-    """ Filter data """
+    """
+    Filter data
+    """
     username = os.getenv("PERSONAL_DATA_DB_USERNAME") or "root"
     password = os.getenv("PERSONAL_DATA_DB_PASSWORD") or ""
     host = os.getenv("PERSONAL_DATA_DB_HOST") or "localhost"
