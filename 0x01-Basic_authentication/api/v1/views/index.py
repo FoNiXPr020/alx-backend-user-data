@@ -14,7 +14,7 @@ def status() -> str:
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/unauthorized', strict_slashes=False)
+@app_views.route('/unauthorized', methods=['GET'], strict_slashes=False)
 def trigger_unauthorized() -> str:
     """ For testing 401 new error handler,
     endpoint must raise a 401 error by using abort
