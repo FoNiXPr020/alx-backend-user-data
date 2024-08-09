@@ -40,47 +40,23 @@ def bef_req():
         pass
     else:
         setattr(request, "current_user", auth.current_user(request))
-        excluded = [
-            '/api/v1/status/',
-            '/api/v1/unauthorized/',
-            '/api/v1/forbidden/',
-            '/api/v1/auth_session/login/'
-        ]
-        if auth.require_auth(request.path, excluded):
-            cookie = auth.session_cookie(request)
-            if auth.authorization_header(request) is None and cookie is None:
-                abort(401, description="Unauthorized")
-            if auth.current_user(request) is None:
-                abort(403, description="Forbidden")
 
 
-@app.errorhandler(404)
-def not_found(error) -> str:
-    """ Not found handler
+@app.route('/users/me', methods=['GET'])
+def me():
+    """ Returns the authenticated user or 404
     """
-    return jsonify({"error": "Not found"}), 404
+    if request.current_user is None:
+        abort(404)
+    return jsonify(request.current_user.to_dict())
 
 
-@app.errorhandler(401)
-def unauthorized(error) -> str:
-    """Unauthorized handler"""
-    return jsonify({"error": "Unauthorized"}), 401
-
-
-@app.errorhandler(403)
-def not_allowed(error) -> str:
-    """_summary_
-
-    Args:
-        error (_type_): _description_
-
-    Returns:
-        str: _description_
+@app.route('/api/v1/users/<user_id>', methods=['GET'])
+def get_user(user_id):
+    """ Get user by id
     """
-    return jsonify({"error": "Forbidden"}), 403
-
-
-if __name__ == "__main__":
-    host = getenv("API_HOST", "0.0.0.0")
-    port = getenv("API_PORT", "5000")
-    app.run(host=host, port=port)
+    if user_id == 'me':
+        if request.current_user is None:
+            abort(404)
+        return jsonify(request.current_user.to_dict())
+    return jsonify(User.find_by_id(user_id).to_dict())
