@@ -86,7 +86,7 @@ def update_password() -> str:
     new_password = request.form.get("new_password")
 
     try:
-        AUTH.update_password(reset_token, new_password)
+        AUTH.update_password(reset_token=reset_token, password=new_password)
     except ValueError:
         abort(403)
 
